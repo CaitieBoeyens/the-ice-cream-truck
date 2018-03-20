@@ -1,16 +1,13 @@
-import Container from '../classes/Container'
-import Flavour from '../classes/Flavour'
-import Topping from '../classes/Topping'
-import Sauce from '../classes/Sauce'
 import IceCream from '../classes/IceCream'
-import Store from '../utils/Store'
+import StoreHelpers from '../utils/StoreHelpers'
 
 const state = {
-    ingredients: {},
-    containers: [],
-    flavours: [],
-    toppings: [],
-    sauces: [],
+    ingredients: {
+        containers: [],
+        flavours: [],
+        toppings: [],
+        sauces: []
+    },
     order: [],
     currentlyselected: {
         container: null,
@@ -26,6 +23,34 @@ const state = {
 const getters = {}
 
 const actions = {
+    resetCurrentSelections({ commit }) {
+        commit('SET_CURRENT_SELECTION', null)
+        commit('SET_CURRENT_ICECREAM', null)
+    },
+
+    addIceCreamToOrder({ commit, dispatch }) {
+        this.order.addIceCream(this.currentIceCream)
+        dispatch('resetCurrentSelections')
+    },
+
+    makeIngredients({ commit }, { containers, flavours, toppings, sauces }) {
+        commit('SAVE_INGREDIENT', {
+            ingredientName: 'containers',
+            value: StoreHelpers.makeContainers(containers)
+        })
+        commit('SAVE_INGREDIENT', {
+            ingredientName: 'flavours',
+            value: StoreHelpers.makeFlavours(flavours)
+        })
+        commit('SAVE_INGREDIENT', {
+            ingredientName: 'toppings',
+            value: StoreHelpers.makeToppings(toppings)
+        })
+        commit('SAVE_INGREDIENT', {
+            ingredientName: 'sauces',
+            value: StoreHelpers.makeSauces(sauces)
+        })
+    },
     makeIceCreamIfValid({ commit, state, dispatch }) {
         const c = state.currentlyselected
         if (!c.container || !c.flavour) {
@@ -66,7 +91,7 @@ const actions = {
         } else {
             commit('SET_SELECTED_INGREDIENT', {
                 ingredientName: 'container',
-                value: Store.findContainer(state.containers, size, type)
+                value: StoreHelpers.findContainer(state.containers, size, type)
             })
         }
         dispatch('makeIceCreamIfValid')
@@ -93,12 +118,14 @@ const actions = {
 }
 
 const mutations = {
-    SET_INGREDIENTS(state, ingredientList) {
-        state.ingredients = ingredientList
-    },
-
     SET_SELECTED_INGREDIENT(state, { ingredientName, value }) {
         state.currentlyselected[ingredientName] = value
+    },
+
+    SAVE_INGREDIENT(state, { ingredientName, value }) {
+        console.log(state.ingredients[ingredientName])
+        state.ingredients[ingredientName] = value
+        console.log(state.ingredients[ingredientName])
     },
 
     TOGGLE_SELECTED_TOPPINGS(state, toppingName) {
@@ -116,6 +143,10 @@ const mutations = {
 
     SET_CURRENT_ICECREAM(state, currentIceCream) {
         state.currentIceCream = currentIceCream
+    },
+
+    SET_CURRENT_SELECTION(state, currentlyselected) {
+        state.currentlyselected = currentlyselected
     }
 }
 

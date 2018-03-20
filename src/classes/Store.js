@@ -79,43 +79,43 @@ Store.prototype.addIceCreamToOrder = function() {
 //         }, [])
 // }
 
-Store.prototype.makeContainers = function(containers) {
-    return containers.map(function(newContainer) {
-        return new Container(
-            newContainer.name,
-            newContainer.price,
-            newContainer.numScoops,
-            newContainer.size
-        )
-    })
-}
+// Store.prototype.makeContainers = function(containers) {
+//     return containers.map(function(newContainer) {
+//         return new Container(
+//             newContainer.name,
+//             newContainer.price,
+//             newContainer.numScoops,
+//             newContainer.size
+//         )
+//     })
+// }
 
-Store.prototype.makeFlavours = function(flavours) {
-    return flavours.map(function(newFlavour) {
-        return new Flavour(newFlavour.name, newFlavour.price)
-    })
-}
+// Store.prototype.makeFlavours = function(flavours) {
+//     return flavours.map(function(newFlavour) {
+//         return new Flavour(newFlavour.name, newFlavour.price)
+//     })
+// }
 
-Store.prototype.makeToppings = function(toppings) {
-    return toppings.map(function(newTopping) {
-        return new Topping(
-            newTopping.name,
-            newTopping.price,
-            newTopping.topping
-        )
-    })
-}
+// Store.prototype.makeToppings = function(toppings) {
+//     return toppings.map(function(newTopping) {
+//         return new Topping(
+//             newTopping.name,
+//             newTopping.price,
+//             newTopping.topping
+//         )
+//     })
+// }
 
-Store.prototype.makeSauces = function(sauces) {
-    return sauces.map(function(newSauce) {
-        return new Sauce(
-            newSauce.name,
-            newSauce.price,
-            newSauce.numScoops,
-            newSauce.size
-        )
-    })
-}
+// Store.prototype.makeSauces = function(sauces) {
+//     return sauces.map(function(newSauce) {
+//         return new Sauce(
+//             newSauce.name,
+//             newSauce.price,
+//             newSauce.numScoops,
+//             newSauce.size
+//         )
+//     })
+// }
 
 // Store.prototype.setSelectedContainerSize = function(size) {
 //     this.currentlyselected.containerSize = size

@@ -3,7 +3,7 @@
         <div class="columns">
             <div class="column is-one-fifth has-text-centered">
                 <ingredient-section
-                v-bind:ingredient-list="Order.ingredients.containers"
+                v-bind:ingredient-list="containers"
                 ingredient-name="Container"
                 />
             </div>
@@ -15,19 +15,19 @@
             </div>
             <div class="column is-one-fifth has-text-centered">
                 <ingredient-section
-                v-bind:ingredient-list="Order.ingredients.flavours"
+                v-bind:ingredient-list="Store.ingredients.flavours"
                 ingredient-name="Flavour"
                 />
             </div>
             <div class="column is-one-fifth has-text-centered">
                 <ingredient-section
-                v-bind:ingredient-list="Order.ingredients.sauces"
+                v-bind:ingredient-list="Store.ingredients.sauces"
                 ingredient-name="Sauce"
                 />
             </div>
             <div class="column is-one-fifth has-text-centered">
                 <ingredient-section
-                v-bind:ingredient-list="Order.ingredients.toppings"
+                v-bind:ingredient-list="Store.ingredients.toppings"
                 ingredient-name="Toppings"
                 can-select-multiple
                 />
@@ -42,23 +42,25 @@
 <script>
 import { mapState } from "vuex";
 import IngredientSection from "./IngredientSection";
+import { containers, flavours, toppings, sauces } from "../data";
 export default {
     components: {
         IngredientSection
     },
     computed: {
-        ...mapState(["Order"]),
+        ...mapState(["Store"]),
         scoopOptions() {
-            const c = this.Order.ingredients.containers;
-            return c
-                ? c[0].sizes.map(s => ({
+            return containers
+                ? containers[0].sizes.map(s => ({
                       name: s.size
                   }))
                 : [];
         }
     },
     data() {
-        return {};
+        return {
+            containers
+        };
     }
 };
 </script>

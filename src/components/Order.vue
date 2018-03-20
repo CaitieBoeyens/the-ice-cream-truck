@@ -8,18 +8,18 @@
 			</h3>
 			<div class="columns">
 				<div class="column is-one-third" id="icecream-view">
-                    <loading-progress
+                    <!-- <loading-progress
                     :progress="progress"
                     :indeterminate="indeterminate"
                     :counter-clockwise="counterClockwise"
                     :hide-background="hideBackground"
                     size="180"
                     fill-duration="2"
-                    />
+                    /> -->
                     <IceCreamView/>
                 </div>
                 <div class="column is-two-thirds" id="icecream-form">
-                    <OrderForm/>
+                    <OrderForm v-if="Store.ingredients.sauces.length > 0"/>
                 </div>
             </div>
         </div>
@@ -34,27 +34,20 @@ import Navbar from "./Navbar";
 import Footer from "./Footer";
 import OrderForm from "./OrderForm";
 import IceCreamView from "./IceCreamView";
-import VueProgress from "vue-progress-path";
-import * as IngredientLists from "../data";
+// import VueProgress from "vue-progress-path";
 import { mapState } from "vuex";
+
 export default {
     components: {
         Navbar,
         Footer,
         OrderForm,
-        IceCreamView,
-        VueProgress
+        IceCreamView
+        // VueProgress
     },
-    created() {
-        this.$store.commit("SET_INGREDIENTS", IngredientLists);
-    },
+
     computed: {
-        ...mapState(["Order"])
-    },
-    data() {
-        return {
-            ingredient_lists: {}
-        };
+        ...mapState(["Store"])
     }
 };
 </script>
