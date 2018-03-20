@@ -1,6 +1,19 @@
 <template>
   <div class="icecream-view">
-      <div class="icecream-render"></div>
+      <div v-if = "!current_ice_cream" class="loader-container">
+          <div class="columns is-centered">
+              <div class="column is-6">
+                    <IceCreamLoader/>
+              </div>
+          </div>
+          <div class="columns is-centered">
+              <div class="column is-6">
+                    <h5>Please add more to your order</h5>
+              </div>
+          </div>
+      </div>
+      <div v-else class="icecream-render">
+      </div>
       <div class="icecream-info">
         <div class="icecream-name">
             <h2 class="icecream-text">{{icecreamName}}</h2>
@@ -13,7 +26,12 @@
 </template>
 
 <script>
+import IceCreamLoader from "./IceCreamLoader";
+import { mapState } from "vuex";
 export default {
+    components: {
+        IceCreamLoader
+    },
     props: {
         icecreamName: {
             required: false,
@@ -24,6 +42,12 @@ export default {
             required: false,
             type: [Number, String],
             default: 0
+        }
+    },
+    computed: {
+        ...mapState(["Store"]),
+        current_ice_cream() {
+            return this.Store.currentIceCream;
         }
     },
     filters: {
@@ -46,8 +70,8 @@ export default {
 .icecream-price h2 {
     background: $blue;
 }
-
 .icecream-render {
+    width: 100%;
     height: 320px;
 }
 </style>
