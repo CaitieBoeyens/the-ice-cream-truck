@@ -1,0 +1,63 @@
+@import "./variables.scss";
+
+#intro-hero {
+    background: url("../assets/backgrounds/yellow-sprinkles.svg"), $yellow;
+    background-size: cover;
+    background-position: top;
+}
+
+#welcome {
+    height: 80vh;
+    width: 100%;
+}
+
+.welcome-message {
+    position: relative;
+    width: 100%;
+    filter: drop-shadow(10px 10px $hot-pink);
+    padding: 0em 0 3em 0;
+}
+
+.huge-text {
+    font-size: 7.5em;
+    text-shadow: 5px 5px $blue;
+    position: absolute;
+    top: 0em;
+    left: 0;
+    width: 100%;
+    padding: 1em 0;
+    /*Text over image from https://css-tricks.com/text-blocks-over-image/ */
+}
+
+.ice-cream-truck-img {
+    height: 90vh;
+    background-image: url("../assets/ice-cream-truck-full.jpg");
+    background-size: cover;
+    background-position: center;
+}
+
+#call-to-action {
+    background: $blue;
+    background-image: url("../assets/backgrounds/blue-sprinkles.svg");
+    background-repeat: repeat-x;
+}
+
+#call-to-action-con {
+    background: $blue;
+}
+
+#instagram {
+    background: url("../assets/backgrounds/orange-sprinkles.svg"), $orange;
+    background-size: cover;
+}
+
+.instagram {
+    margin: 10px;
+    & img {
+        width: 100%;
+    }
+}
+
+.instagram-carousel {
+    margin-bottom: 2em;
+}
