@@ -5,42 +5,47 @@
                 <ingredient-section
                 v-bind:ingredient-list="containers"
                 ingredient-name="Container"
+                @selected = "setSelectedContainerType"
                 />
             </div>
             <div class="column is-one-fifth has-text-centered">
                 <ingredient-section
                 v-bind:ingredient-list="scoopOptions"
                 ingredient-name="Size"
+                @selected = "setSelectedContainerSize"
                 />
             </div>
             <div class="column is-one-fifth has-text-centered">
                 <ingredient-section
                 v-bind:ingredient-list="Store.ingredients.flavours"
                 ingredient-name="Flavour"
+                @selected = "setSelectedFlavour"
                 />
             </div>
             <div class="column is-one-fifth has-text-centered">
                 <ingredient-section
                 v-bind:ingredient-list="Store.ingredients.sauces"
                 ingredient-name="Sauce"
+                @selected = "setSelectedSauce"
                 />
             </div>
             <div class="column is-one-fifth has-text-centered">
                 <ingredient-section
                 v-bind:ingredient-list="Store.ingredients.toppings"
                 ingredient-name="Toppings"
+                @selected = "setSelectedTopping"
                 can-select-multiple
                 />
             </div>
         </div>
-        <div class="button btn order-btn">Clear</div>
+        <!-- <div class="button btn order-btn" @click = "resetCurrentSelections">Clear</div> -->
         <div class="button btn order-btn">Add to Order</div>
         <div class="button btn order-btn">Employee Order</div>
     </div>
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState, mapActions } from "vuex";
 import IngredientSection from "./IngredientSection";
 import { containers, flavours, toppings, sauces } from "../data";
 export default {
@@ -59,8 +64,19 @@ export default {
     },
     data() {
         return {
-            containers
+            containers,
+            flavours
         };
+    },
+    methods: {
+        ...mapActions([
+            "setSelectedContainerType",
+            "setSelectedContainerSize",
+            "setSelectedFlavour",
+            "setSelectedSauce",
+            "setSelectedTopping",
+            "resetCurrentSelections"
+        ])
     }
 };
 </script>

@@ -2,6 +2,7 @@ import Container from '../classes/Container'
 import Flavour from '../classes/Flavour'
 import Topping from '../classes/Topping'
 import Sauce from '../classes/Sauce'
+import { containers, flavours, toppings, sauces } from '../data'
 
 export default class Store {
     static findContainer(containers, size, type) {

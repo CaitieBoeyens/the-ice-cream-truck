@@ -16,7 +16,7 @@
                     size="180"
                     fill-duration="2"
                     /> -->
-                    <IceCreamView/>
+                    <IceCreamView v-bind:icecream-price="showPrice" v-bind:icecream-name="showName"/>
                 </div>
                 <div class="column is-two-thirds" id="icecream-form">
                     <OrderForm v-if="Store.ingredients.sauces.length > 0"/>
@@ -47,8 +47,18 @@ export default {
     },
 
     computed: {
-        ...mapState(["Store"])
-    }
+        ...mapState(["Store"]),
+
+        showPrice() {
+            const ic = this.Store.currentIceCream;
+            return ic ? ic.getPrice() : null;
+        },
+        showName() {
+            const ic = this.Store.currentIceCream;
+            return ic ? ic.getName() : null;
+        }
+    },
+    methods: {}
 };
 </script>
 

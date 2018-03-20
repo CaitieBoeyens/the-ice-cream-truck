@@ -91,7 +91,11 @@ const actions = {
         } else {
             commit('SET_SELECTED_INGREDIENT', {
                 ingredientName: 'container',
-                value: StoreHelpers.findContainer(state.containers, size, type)
+                value: StoreHelpers.findContainer(
+                    state.ingredients.containers,
+                    size,
+                    type
+                )
             })
         }
         dispatch('makeIceCreamIfValid')
@@ -100,18 +104,21 @@ const actions = {
     setSelectedFlavour({ state, commit, dispatch }, flavourName) {
         commit('SET_SELECTED_INGREDIENT', {
             ingredientName: 'flavour',
-            value: state.flavours.find(f => f.name === flavourName) || null
+            value:
+                state.ingredients.flavours.find(f => f.name === flavourName) ||
+                null
         })
         dispatch('makeIceCreamIfValid')
     },
-    setSelectedTopping({ state, commit, dispatch }, toppingName) {
-        commit('TOOGLE_SELECTED_TOPPINGS', toppingName)
+    setSelectedTopping({ commit, dispatch }, toppingName) {
+        commit('TOGGLE_SELECTED_TOPPINGS', toppingName)
         dispatch('makeIceCreamIfValid')
     },
     setSelectedSauce({ state, commit, dispatch }, sauceName) {
         commit('SET_SELECTED_INGREDIENT', {
             ingredientName: 'sauce',
-            value: state.sauces.find(s => s.name === sauceName) || null
+            value:
+                state.ingredients.sauces.find(s => s.name === sauceName) || null
         })
         dispatch('makeIceCreamIfValid')
     }
@@ -123,9 +130,7 @@ const mutations = {
     },
 
     SAVE_INGREDIENT(state, { ingredientName, value }) {
-        console.log(state.ingredients[ingredientName])
         state.ingredients[ingredientName] = value
-        console.log(state.ingredients[ingredientName])
     },
 
     TOGGLE_SELECTED_TOPPINGS(state, toppingName) {
@@ -135,9 +140,13 @@ const mutations = {
             toppings.splice(toppingIndex, 1)
         } else if (toppings.length === 2) {
             toppings.shift()
-            toppings.push(state.toppings.find(t => t.name === toppingName))
+            toppings.push(
+                state.ingredients.toppings.find(t => t.name === toppingName)
+            )
         } else {
-            toppings.push(state.toppings.find(t => t.name === toppingName))
+            toppings.push(
+                state.ingredients.toppings.find(t => t.name === toppingName)
+            )
         }
     },
 

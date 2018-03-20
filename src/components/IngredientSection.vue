@@ -7,7 +7,7 @@
         v-bind:key="i.name"
         v-bind:icon-name="i.name"
         v-bind:value="i.name"
-        v-bind:ingredientName="i.name"
+        v-bind:ingredient-name="i.name"
         v-bind:currently-selected="getCurrentSelected(i.name)"
         @selected="setCurrentSelected"/>
     </div>
@@ -15,7 +15,7 @@
 
 <script>
 import IngredientOption from "./IngredientOption";
-import Store from "../vuex/Store.js";
+import { mapState } from "vuex";
 import StoreHelpers from "../utils/StoreHelpers";
 
 export default {
@@ -37,6 +37,15 @@ export default {
     components: {
         IngredientOption
     },
+    computed: {
+        ...mapState(["Store"]),
+        selected_options() {
+            if (!this.canSelectMultiple) return null;
+            return this.Store.currentlyselected[
+                this.ingredientName.toString().toLowerCase()
+            ];
+        }
+    },
     data() {
         return {
             selection_tracker: null
@@ -50,21 +59,20 @@ export default {
             } else {
                 this.selection_tracker = selected_option;
             }
+            this.$emit("selected", selected_option);
         },
         getCurrentSelected(name) {
             if (this.canSelectMultiple) {
-                return this.selection_tracker[name] ? name : null;
+                return this.selected_options &&
+                    this.selected_options.map(i => i.name).includes(name)
+                    ? name
+                    : null;
             } else {
                 return this.selection_tracker;
             }
         }
     },
     mounted() {
-        // this.$store.dispatch("setSelectedContainerSize", {
-        //     size: value
-        // });
-
-        console.log(this.ingredientList);
         if (this.canSelectMultiple) {
             this.selection_tracker = this.ingredientList
                 .map(i => ({ [i.name]: false }))
