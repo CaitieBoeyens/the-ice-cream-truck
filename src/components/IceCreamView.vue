@@ -1,6 +1,6 @@
 <template>
   <div class="icecream-view">
-      <div v-if = "!current_ice_cream" class="loader-container">
+      <div v-if = "!currentIceCream" class="loader-container">
           <div class="columns is-centered">
               <div class="column is-6">
                     <IceCreamLoader/>
@@ -8,11 +8,17 @@
           </div>
           <div class="columns is-centered">
               <div class="column is-6">
-                    <h5>Please add more to your order</h5>
+                    <h5>You need to select a container, size and flavour</h5>
               </div>
           </div>
       </div>
       <div v-else class="icecream-render">
+          <img id="container" v-bind:src="containerPath" alt="container">
+          <img id="scoops" v-bind:src="scoopsPath" alt="scoops">
+          <img id="sauce" v-if="this.Store.currentlyselected.sauce" v-bind:src="saucePath" alt="sauce">
+          <img id="almonds" v-if="currentToppings.includes('almonds')" v-bind:src="nutPath" alt="toppings">
+          <img id="sprinkles" v-if="currentToppings.includes('sprinkles')" v-bind:src="sprinklePath" alt="toppings">
+          <img id="flake" v-if="currentToppings.includes('flake')" v-bind:src="flakePath" alt="toppings">
       </div>
       <div class="icecream-info">
         <div class="icecream-name">
@@ -46,8 +52,41 @@ export default {
     },
     computed: {
         ...mapState(["Store"]),
-        current_ice_cream() {
+        currentIceCream() {
             return this.Store.currentIceCream;
+        },
+        currentToppings() {
+            return this.Store.currentlyselected.toppings.map(t => t.topping);
+        },
+        containerPath() {
+            const cs = this.Store.currentlyselected;
+            return require(`../assets/icecream_ingredients/containers/${
+                cs.container.name
+            }.svg`);
+        },
+        scoopsPath() {
+            const cs = this.Store.currentlyselected;
+            return require(`../assets/icecream_ingredients/flavours/${
+                cs.container.numScoops
+            }_${cs.flavour.name}.svg`);
+        },
+        saucePath() {
+            return require(`../assets/icecream_ingredients/sauces/${
+                this.Store.currentlyselected.container.numScoops
+            }_${this.Store.currentlyselected.sauce.name}.svg`);
+        },
+        nutPath() {
+            return require(`../assets/icecream_ingredients/toppings/${
+                this.Store.currentlyselected.container.numScoops
+            }_almonds.svg`);
+        },
+        sprinklePath() {
+            return require(`../assets/icecream_ingredients/toppings/${
+                this.Store.currentlyselected.container.numScoops
+            }_sprinkles.svg`);
+        },
+        flakePath() {
+            return require(`../assets/icecream_ingredients/toppings/flake.svg`);
         }
     },
     filters: {
@@ -61,7 +100,7 @@ export default {
 <style lang="scss">
 @import "../assets/styles/order.scss";
 @import "../assets/styles/variables.scss";
-
+$top-offset: 150px;
 .icecream-text {
     font-size: 1.5em;
     color: $dark-pink;
@@ -73,5 +112,52 @@ export default {
 .icecream-render {
     width: 100%;
     height: 320px;
+}
+
+.icecream-render img {
+    width: 150px;
+}
+
+#container {
+    position: absolute;
+    width: 135px;
+    left: 132px;
+    top: 375px;
+    z-index: 1;
+}
+
+#scoops {
+    position: absolute;
+    left: 125px;
+    top: $top-offset;
+    z-index: 2;
+}
+
+#sauce {
+    position: absolute;
+    left: 125px;
+    top: $top-offset;
+    z-index: 3;
+}
+
+#almonds {
+    position: absolute;
+    left: 125px;
+    top: $top-offset;
+    z-index: 4;
+}
+
+#sprinkles {
+    position: absolute;
+    left: 125px;
+    top: $top-offset;
+    z-index: 4;
+}
+
+#flake {
+    position: absolute;
+    left: 180px;
+    top: $top-offset - 25px;
+    z-index: 0;
 }
 </style>

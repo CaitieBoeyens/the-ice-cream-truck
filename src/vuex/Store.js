@@ -1,5 +1,6 @@
 import IceCream from '../classes/IceCream'
 import StoreHelpers from '../utils/StoreHelpers'
+import Order from './Order'
 
 const state = {
     ingredients: {
@@ -8,7 +9,6 @@ const state = {
         toppings: [],
         sauces: []
     },
-    order: [],
     currentlyselected: {
         container: null,
         flavour: null,
@@ -160,6 +160,9 @@ const mutations = {
 }
 
 export default {
+    modules: {
+        Order
+    },
     state,
     getters,
     actions,

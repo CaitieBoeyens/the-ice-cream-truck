@@ -24,6 +24,7 @@
             </div>
         </div>
 	</section>
+    <side-bar/>
     <Footer/>
 </div>
 
@@ -34,7 +35,7 @@ import Navbar from "./Navbar";
 import Footer from "./Footer";
 import OrderForm from "./OrderForm";
 import IceCreamView from "./IceCreamView";
-// import VueProgress from "vue-progress-path";
+import SideBar from "./SideBar";
 import { mapState } from "vuex";
 
 export default {
@@ -42,8 +43,8 @@ export default {
         Navbar,
         Footer,
         OrderForm,
-        IceCreamView
-        // VueProgress
+        IceCreamView,
+        SideBar
     },
 
     computed: {

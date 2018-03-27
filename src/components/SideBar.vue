@@ -1,60 +1,170 @@
 <template>
-<div>
-    <div id="title">
-        <h3>Click Contact Us Button to Slide In Contact Form</h3>
+    <div :class="slideoutClasses">
+        <div class="tab" @click="toggleOpen">{{ tabText }}</div>
+        <div :class="slideoutInnerClasses">
+            <span class="close" @click="toggleOpen">
+                <p>X</p>
+            </span>
+            <h2>Order Summary</h2>
+            <div class="order-item">
+                <div class="media">
+                    <figure class="media-left">
+                        <p class="image is-128x128">
+                            <img src="https://bulma.io/images/placeholders/128x128.png">
+                        </p>
+                    </figure>
+                    <div class="media-content">
+                        <div class="content">
+                                <h2>Large nutty rainbow choclate salted caramel waffle-cone</h2>
+                                <h2>Total: R00.00</h2>
+                        </div>
+                    </div>
+                    <div class="media-right">
+                        <button class="delete"></button>
+                    </div>
+                </div>
+            </div> <!-- ORDER ITEM -->
+            <div class="order-total">
+                <h2>Total: R00.00</h2>
+            </div>
+        </div>
     </div>
-    <!-- Sliding div starts here -->
-    <div id="slider" style="right:-342px;">
-    <div id="sidebar" onclick="open_panel()"><img src="images/contact.png"></div>
-    <div id="header">
-        <h2>Contact Form</h2>
-        <p>This is my form.Please fill it out.It's awesome!</p>
-        <input name="dname" type="text" value="Your Name">
-        <input name="demail" type="text" value="Your Email">
-        <h4>Query type</h4>
-        <select>
-            <option>General Query</option>
-            <option>Presales</option>
-            <option>Technical</option>
-            <option>Others</option>
-        </select>
-        <textarea>Message</textarea>
-        <button>Send Message</button>
-    </div>
-</div>
 
-</div>
-<!-- Sliding div ends here -->
 </template>
 
 <script>
-export default {};
+export default {
+    computed: {
+        tabText() {
+            return this.open ? "Hide Order" : "Show Order";
+        },
+        slideoutClasses() {
+            return {
+                slideout: true,
+                "slideout-active": this.open
+            };
+        },
+        slideoutInnerClasses() {
+            return {
+                "slideout-inner": true,
+                "slideout-inner-active": this.open
+            };
+        }
+    },
+    data() {
+        return {
+            open: false
+        };
+    },
+    methods: {
+        toggleOpen() {
+            this.open = !this.open;
+        }
+    }
+};
 </script>
 
 <style lang=scss scoped>
 @import "../assets/styles/variables.scss";
 
-#sidebar {
-    background-color: $light-pink;
+/* some slideout css from http://usabilitypost.com/2011/04/19/pure-css-slideout-interface/ */
+
+.slideout {
     position: fixed;
     top: 40px;
-    left: 0;
+    right: 0;
+    -webkit-transition-duration: 0.3s;
+    -moz-transition-duration: 0.3s;
+    -o-transition-duration: 0.3s;
     transition-duration: 0.3s;
 }
-#sidebar-content {
+
+.slideout-inner {
     position: fixed;
     top: 40px;
-    left: -250px;
-    transition-duration: 0.5s;
+    right: -500px;
+    -webkit-transition-duration: 0.3s;
+    -moz-transition-duration: 0.3s;
+    -o-transition-duration: 0.3s;
+    transition-duration: 0.3s;
+    background-color: $dark-pink;
+    width: 500px;
+    padding-left: 20px;
 }
-#sidebar:hover {
-    left: 250px;
+
+.slideout-active {
+    right: 500px;
 }
-#sidebar:hover #sidebar-content {
-    left: 0;
+
+.slideout-inner-active {
+    right: 0px;
 }
 
 .tab {
-    transform: rotate(90deg);
+    position: relative;
+    top: 43px;
+    right: -48px;
+    transform: rotate(-90deg);
+    font-family: $oswald;
+    text-transform: uppercase;
+    font-size: 1.5em;
+    font-weight: 600;
+    cursor: pointer;
+    background: white;
+    border: solid $dark-pink 4px;
+    color: $dark-pink;
+    border-bottom: 0;
+    padding: 20px;
+}
+
+.close {
+    float: right;
+    cursor: pointer;
+    background: white;
+    border-radius: 50%;
+    margin: 20px;
+    padding: 2.5px 10px;
+}
+
+.close p {
+    color: $dark-pink;
+    font-weight: bold;
+}
+
+.slideout-inner h2 {
+    font-size: 1.4em;
+    margin-top: 20px;
+}
+
+.prices li {
+    list-style: none;
+}
+
+.content {
+    overflow: hidden;
+}
+.order-item {
+    background-color: white;
+    width: 80%;
+    margin: 20px auto;
+    padding: 20px;
+}
+
+.order-item h2 {
+    font-size: 1.2em;
+    text-transform: none;
+}
+
+.order-total h2 {
+    margin: 0;
+    font-size: 1.2em;
+}
+
+.order-total {
+    border: solid white 4px;
+    padding: 10px;
+    width: fit-content;
+    margin: 20px;
+    float: right;
 }
 </style>
