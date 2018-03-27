@@ -1,3 +1,4 @@
+import IceCream from './IceCream'
 function Order() {
     this.iceCreams = []
 }
@@ -9,6 +10,13 @@ Order.prototype.addIceCream = function(iceCream) {
     }
 
     this.iceCreams.push(iceCream)
+}
+
+Order.prototype.addIceCreams = function(iceCreams) {
+    if (!Array.isArray(iceCreams)) {
+        throw new TypeError('iceCreams must be an array')
+    }
+    iceCreams.forEach(i => this.addIceCream(i))
 }
 
 Order.prototype.getPrice = function() {

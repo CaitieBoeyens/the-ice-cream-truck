@@ -1,37 +1,29 @@
+import Order from '../classes/Order'
+import EmployeeOrder from '../classes/EmployeeOrder'
 const state = {
-    currentOrder: [],
+    currentOrder: null,
     employeeOrder: false
 }
 const getters = {
-    orderTotal: state =>
-        state.currentOrder
-            .map(i => i.getPrice())
-            .reduce((total, curr) => total + curr, 0)
-}
-
-const actions = {
-    removeIcecreamFromOrder({ commit }, iceCream) {
-        commit('REMOVE_ICE_CREAM')
-    }
+    orderTotal: state => state.currentOrder.getPrice()
 }
 
 const mutations = {
     ADD_ICE_CREAM(state, iceCream) {
-        state.currentOrder.push(iceCream)
+        state.currentOrder.addIceCream(iceCream)
     },
-    REMOVE_ICE_CREAM(state, iceCream) {
-        const iceCreamIndex = state.currentOrder.findIndex(
-            i => i.getName() === iceCream.getName()
-        )
-        if (iceCreamIndex !== -1) {
-            state.currentOrder.splice(iceCreamIndex, 1)
-        }
+    SET_UP_ORDER(state) {
+        state.currentOrder = new Order()
     },
-    TOGGLE_EMPLOYEE_ORDER(state, status) {
-        if (status === true || status === false) {
-            state.employeeOrder = status
+    TOGGLE_EMPLOYEE_ORDER(state) {
+        if (!(state.currentOrder instanceof EmployeeOrder)) {
+            const employeeOrder = new EmployeeOrder()
+            employeeOrder.addIceCreams(state.currentOrder.iceCreams)
+            state.currentOrder = employeeOrder
         } else {
-            state.employeeOrder = !state.employeeOrder
+            const order = new Order()
+            order.addIceCreams(state.currentOrder.iceCreams)
+            state.currentOrder = order
         }
     }
 }
@@ -40,6 +32,5 @@ export default {
     namespaced: true,
     state,
     mutations,
-    actions,
     getters
 }

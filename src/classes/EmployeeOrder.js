@@ -1,7 +1,6 @@
 import Order from './Order'
 function EmployeeOrder() {
     Order.call(this)
-
     this.discountMultiplier = 0.8
 }
 
