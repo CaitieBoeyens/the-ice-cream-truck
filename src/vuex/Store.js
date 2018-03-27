@@ -24,13 +24,14 @@ const getters = {}
 
 const actions = {
     resetCurrentSelections({ commit }) {
-        commit('SET_CURRENT_SELECTION', null)
+        commit('RESET_CURRENTLY_SELECTED')
         commit('SET_CURRENT_ICECREAM', null)
     },
 
-    addIceCreamToOrder({ commit, dispatch }) {
-        this.order.addIceCream(this.currentIceCream)
-        dispatch('resetCurrentSelections')
+    addIceCreamToOrder({ commit, state, dispatch }) {
+        commit('Order/ADD_ICE_CREAM', state.currentIceCream)
+        commit('RESET_CURRENTLY_SELECTED')
+        commit('SET_CURRENT_ICECREAM', null)
     },
 
     makeIngredients({ commit }, { containers, flavours, toppings, sauces }) {
@@ -156,6 +157,17 @@ const mutations = {
 
     SET_CURRENT_SELECTION(state, currentlyselected) {
         state.currentlyselected = currentlyselected
+    },
+
+    RESET_CURRENTLY_SELECTED(state) {
+        state.currentlyselected = {
+            container: null,
+            flavour: null,
+            toppings: [],
+            sauce: null,
+            containerSize: null,
+            containerType: null
+        }
     }
 }
 

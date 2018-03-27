@@ -38,9 +38,26 @@
                 />
             </div>
         </div>
-        <!-- <div class="button btn order-btn" @click = "resetCurrentSelections">Clear</div> -->
-        <div class="button btn order-btn">Add to Order</div>
-        <div class="button btn order-btn">Employee Order</div>
+        <div class="button btn order-btn" @click="resetCurrentSelections">Clear</div>
+        <div class="button btn order-btn" v-bind:disabled="!this.Store.currentIceCream" @click="addIceCreamToOrder">Add to Order</div>
+
+
+        <b-modal :active.sync="isEmployeeOrderModalActive" :width="640" scroll="keep">
+            <div class="card">
+                <div class="card-content">
+                    <div class="content">
+                        <h2>Apply employee discount code</h2>
+                        <p>Input your employee code to prove you're one of us</p>
+                        <div class="field">
+                            <div class="control">
+                                <input class="input is-large" type="text" placeholder="Employee code">
+                            </div>
+                        </div>
+                        <div class="button btn order-btn" v-bind:disabled="!this.Store.currentIceCream" @click="addIceCreamToOrder">Add to Order</div>
+                    </div>
+                </div>
+            </div>
+        </b-modal>
     </div>
 </template>
 
@@ -65,7 +82,8 @@ export default {
     data() {
         return {
             containers,
-            flavours
+            flavours,
+            isEmployeeOrderModalActive: false
         };
     },
     methods: {
@@ -75,7 +93,8 @@ export default {
             "setSelectedFlavour",
             "setSelectedSauce",
             "setSelectedTopping",
-            "resetCurrentSelections"
+            "resetCurrentSelections",
+            "addIceCreamToOrder"
         ])
     }
 };
@@ -92,5 +111,19 @@ export default {
         border: solid $dark-pink 4px;
         color: $dark-pink;
     }
+}
+
+.card {
+    background-color: $dark-pink;
+}
+
+.card h2 {
+    color: white;
+    font-weight: 600;
+}
+
+.card .order-btn {
+    border: solid white 4px;
+    color: white;
 }
 </style>

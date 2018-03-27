@@ -2,14 +2,16 @@
 
     <div>
         <h5>{{ingredientName}}</h5>
-        <ingredient-option
-        v-for="i in ingredientList"
-        v-bind:key="i.name"
-        v-bind:icon-name="i.name"
-        v-bind:value="i.name"
-        v-bind:ingredient-name="i.name"
-        v-bind:currently-selected="getCurrentSelected(i.name)"
-        @selected="setCurrentSelected"/>
+        <b-tooltip label="bleh">
+            <ingredient-option
+            v-for="i in ingredientList"
+            v-bind:key="i.name"
+            v-bind:icon-name="i.name"
+            v-bind:value="i.name"
+            v-bind:ingredient-name="i.name"
+            v-bind:currently-selected="getCurrentSelected(i.name)"
+            @selected="setCurrentSelected"/>
+        </b-tooltip>
     </div>
 </template>
 
@@ -44,21 +46,31 @@ export default {
             return this.Store.currentlyselected[
                 this.ingredientName.toString().toLowerCase()
             ];
+        },
+        selected_option() {
+            if (this.canSelectMultiple) return null;
+            if (this.ingredientName === "Size") {
+                return { name: this.Store.currentlyselected.containerSize };
+            } else if (this.ingredientName === "Container") {
+                return { name: this.Store.currentlyselected.containerType };
+            } else {
+                return this.Store.currentlyselected[
+                    this.ingredientName.toString().toLowerCase()
+                ];
+            }
         }
     },
     data() {
-        return {
-            selection_tracker: null
-        };
+        return {};
     },
     methods: {
         setCurrentSelected(selected_option) {
-            if (this.canSelectMultiple) {
-                this.selection_tracker[selected_option] = !this
-                    .selection_tracker[selected_option];
-            } else {
-                this.selection_tracker = selected_option;
-            }
+            // if (this.canSelectMultiple) {
+            //     this.selection_tracker[selected_option] = !this
+            //         .selection_tracker[selected_option];
+            // } else {
+            //     this.selection_tracker = selected_option;
+            // }
             this.$emit("selected", selected_option);
         },
         getCurrentSelected(name) {
@@ -68,7 +80,7 @@ export default {
                     ? name
                     : null;
             } else {
-                return this.selection_tracker;
+                return this.selected_option ? this.selected_option.name : null;
             }
         }
     },

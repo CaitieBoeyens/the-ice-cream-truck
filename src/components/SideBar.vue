@@ -6,26 +6,27 @@
                 <p>X</p>
             </span>
             <h2>Order Summary</h2>
-            <div class="order-item">
+            <div v-for="(i, idx) in Order.currentOrder" v-bind:key="idx" class="order-item">
                 <div class="media">
-                    <figure class="media-left">
-                        <p class="image is-128x128">
-                            <img src="https://bulma.io/images/placeholders/128x128.png">
-                        </p>
-                    </figure>
                     <div class="media-content">
                         <div class="content">
-                                <h2>Large nutty rainbow choclate salted caramel waffle-cone</h2>
-                                <h2>Total: R00.00</h2>
+                                <h2>{{i.getName()}}</h2>
+                                <h2>Total: {{i.getPrice() | currency}}</h2>
                         </div>
                     </div>
                     <div class="media-right">
-                        <button class="delete"></button>
+                        <button class="delete" @click="removeFromOrder"></button>
                     </div>
                 </div>
             </div> <!-- ORDER ITEM -->
+
             <div class="order-total">
-                <h2>Total: R00.00</h2>
+                <h2>Total: {{orderTotal | currency}}</h2>
+            </div>
+            <div>
+
+                <div class="button btn order-btn" @click="isEmployeeOrderModalActive = true">Employee Code</div>
+                <div class="button btn order-btn" @click="isCheckoutModalActive = true">Checkout</div>
             </div>
         </div>
     </div>
@@ -33,8 +34,14 @@
 </template>
 
 <script>
+import { mapState, mapActions, mapGetters } from "vuex";
 export default {
     computed: {
+        ...mapState({ Order: state => state.Store.Order }),
+        ...mapGetters(["Order/orderTotal"]),
+        orderTotal() {
+            return this["Order/orderTotal"];
+        },
         tabText() {
             return this.open ? "Hide Order" : "Show Order";
         },
@@ -59,6 +66,15 @@ export default {
     methods: {
         toggleOpen() {
             this.open = !this.open;
+        },
+        removeFromOrder() {
+            debugger;
+            return this["Order/removeIcecreamFromOrder"];
+        }
+    },
+    filters: {
+        currency(value) {
+            return `R ${Number(value).toFixed(2)}`;
         }
     }
 };
@@ -66,6 +82,18 @@ export default {
 
 <style lang=scss scoped>
 @import "../assets/styles/variables.scss";
+
+.order-btn {
+    border: solid white 4px;
+    color: white;
+    font-size: 1.2em;
+    padding: 20px;
+    &:hover {
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.176);
+        border: solid white 4px;
+        color: white;
+    }
+}
 
 /* some slideout css from http://usabilitypost.com/2011/04/19/pure-css-slideout-interface/ */
 
@@ -90,6 +118,9 @@ export default {
     background-color: $dark-pink;
     width: 500px;
     padding-left: 20px;
+    min-height: 170px;
+    max-height: 90vh;
+    overflow-y: scroll;
 }
 
 .slideout-active {
@@ -136,10 +167,6 @@ export default {
     margin-top: 20px;
 }
 
-.prices li {
-    list-style: none;
-}
-
 .content {
     overflow: hidden;
 }
@@ -161,10 +188,9 @@ export default {
 }
 
 .order-total {
-    border: solid white 4px;
+    background-color: $light-pink;
     padding: 10px;
     width: fit-content;
     margin: 20px;
-    float: right;
 }
 </style>
