@@ -31,60 +31,56 @@
 </template>
 
 <script>
-import { mapState, mapGetters } from 'vuex'
+import { mapState, mapGetters } from "vuex";
 export default {
     computed: {
         ...mapState({ Order: state => state.Store.Order }),
-        ...mapGetters(['Order/orderTotal']),
+        ...mapGetters(["Order/orderTotal"]),
         orderTotal() {
-            return this['Order/orderTotal']
+            return this["Order/orderTotal"];
         },
         tabText() {
-            return this.open ? 'Hide Order' : 'Show Order'
+            return this.open ? "Hide Order" : "Show Order";
         },
         slideoutClasses() {
             return {
                 slideout: true,
-                'slideout-active': this.open
-            }
+                "slideout-active": this.open
+            };
         },
         slideoutInnerClasses() {
             return {
-                'slideout-inner': true,
-                'slideout-inner-active': this.open
-            }
+                "slideout-inner": true,
+                "slideout-inner-active": this.open
+            };
         }
     },
     created() {
-        this.$store.commit('Order/SET_UP_ORDER')
+        this.$store.commit("Order/SET_UP_ORDER");
     },
     data() {
         return {
-            open: false,
-            checkoutModalActive: false
-        }
+            open: false
+        };
     },
     methods: {
         toggleOpen() {
-            this.open = !this.open
-        },
-        toggleCheckoutModalActive() {
-            this.checkoutModalActive = !this.checkoutModalActive
+            this.open = !this.open;
         },
         toggleEmployeeOrder() {
-            this.$store.commit('Order/TOGGLE_EMPLOYEE_ORDER')
+            this.$store.commit("Order/TOGGLE_EMPLOYEE_ORDER");
         }
     },
     filters: {
         currency(value) {
-            return `R ${Number(value).toFixed(2)}`
+            return `R ${Number(value).toFixed(2)}`;
         }
     }
-}
+};
 </script>
 
 <style lang=scss scoped>
-@import '../assets/styles/variables.scss';
+@import "../assets/styles/variables.scss";
 
 .order-btn {
     border: solid white 4px;

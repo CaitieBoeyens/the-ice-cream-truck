@@ -41,23 +41,6 @@
         <div class="button btn order-btn" @click="resetCurrentSelections">Clear</div>
         <div class="button btn order-btn" v-bind:disabled="!this.Store.currentIceCream" @click="addIceCreamToOrder">Add to Order</div>
 
-
-        <b-modal :active.sync="isEmployeeOrderModalActive" :width="640" scroll="keep">
-            <div class="card">
-                <div class="card-content">
-                    <div class="content">
-                        <h2>Apply employee discount code</h2>
-                        <p>Input your employee code to prove you're one of us</p>
-                        <div class="field">
-                            <div class="control">
-                                <input class="input is-large" type="text" placeholder="Employee code">
-                            </div>
-                        </div>
-                        <div class="button btn order-btn" v-bind:disabled="!this.Store.currentIceCream" @click="addIceCreamToOrder">Add to Order</div>
-                    </div>
-                </div>
-            </div>
-        </b-modal>
     </div>
 </template>
 
