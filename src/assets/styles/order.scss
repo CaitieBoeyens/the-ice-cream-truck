@@ -1,0 +1,27 @@
+@import "./variables.scss";
+body {
+    background-color: $blue;
+    background-image: url("../assets/backgrounds/blue-sprinkles.svg");
+    background-repeat: repeat-x;
+}
+
+#header {
+    background-color: white;
+    border: $blue solid 5px;
+}
+
+#header h3 {
+    padding: 0.5em 0;
+}
+
+#order-container {
+    background-color: white;
+    border: $hot-pink solid 5px;
+    padding: 2em 1em;
+    margin-bottom: 2em;
+}
+
+#icecream-name {
+    background-color: $light-pink;
+    height: 1em;
+}
