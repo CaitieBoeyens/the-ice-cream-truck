@@ -31,12 +31,12 @@
 </template>
 
 <script>
-import Navbar from "./Navbar";
-import Footer from "./Footer";
-import OrderForm from "./OrderForm";
-import IceCreamView from "./IceCreamView";
-import SideBar from "./SideBar";
-import { mapState } from "vuex";
+import Navbar from './Navbar';
+import Footer from './Footer';
+import OrderForm from './OrderForm';
+import IceCreamView from './IceCreamView';
+import SideBar from './SideBar';
+import { mapState } from 'vuex';
 
 export default {
     components: {
@@ -48,7 +48,7 @@ export default {
     },
 
     computed: {
-        ...mapState(["Store"]),
+        ...mapState(['Store']),
 
         showPrice() {
             const ic = this.Store.currentIceCream;
@@ -64,7 +64,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import "../assets/styles/order.scss";
+@import '../assets/styles/order.scss';
 
 .vue-progress-path path {
     stroke-width: 12;

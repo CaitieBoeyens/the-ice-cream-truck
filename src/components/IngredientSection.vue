@@ -2,7 +2,7 @@
 
     <div>
         <h5>{{ingredientName}}</h5>
-        <b-tooltip label="bleh">
+
             <ingredient-option
             v-for="i in ingredientList"
             v-bind:key="i.name"
@@ -11,14 +11,14 @@
             v-bind:ingredient-name="i.name"
             v-bind:currently-selected="getCurrentSelected(i.name)"
             @selected="setCurrentSelected"/>
-        </b-tooltip>
+
     </div>
 </template>
 
 <script>
-import IngredientOption from "./IngredientOption";
-import { mapState } from "vuex";
-import StoreHelpers from "../utils/StoreHelpers";
+import IngredientOption from './IngredientOption';
+import { mapState } from 'vuex';
+import StoreHelpers from '../utils/StoreHelpers';
 
 export default {
     props: {
@@ -40,7 +40,7 @@ export default {
         IngredientOption
     },
     computed: {
-        ...mapState(["Store"]),
+        ...mapState(['Store']),
         selected_options() {
             if (!this.canSelectMultiple) return null;
             return this.Store.currentlyselected[
@@ -49,9 +49,9 @@ export default {
         },
         selected_option() {
             if (this.canSelectMultiple) return null;
-            if (this.ingredientName === "Size") {
+            if (this.ingredientName === 'Size') {
                 return { name: this.Store.currentlyselected.containerSize };
-            } else if (this.ingredientName === "Container") {
+            } else if (this.ingredientName === 'Container') {
                 return { name: this.Store.currentlyselected.containerType };
             } else {
                 return this.Store.currentlyselected[
@@ -71,7 +71,7 @@ export default {
             // } else {
             //     this.selection_tracker = selected_option;
             // }
-            this.$emit("selected", selected_option);
+            this.$emit('selected', selected_option);
         },
         getCurrentSelected(name) {
             if (this.canSelectMultiple) {

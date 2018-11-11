@@ -9,6 +9,9 @@
             <div v-for="(i, idx) in Order.currentOrder.iceCreams" v-bind:key="idx" class="order-item">
                 <div class="media">
                     <div class="media-content">
+                        <span class="close" @click="removeIceCream(idx)">
+                            <p>X</p>
+                        </span>
                         <div class="content">
                                 <h2>{{i.getName()}}</h2>
                                 <h2>Total: {{i.getPrice() | currency}}</h2>
@@ -22,53 +25,74 @@
             </div>
             <div>
 
-                <div class="button btn order-btn" @click="toggleEmployeeOrder">Toggle Employee Order</div>
-                <div class="button btn order-btn">Checkout</div>
+                <div class="button btn order-btn" @click="toggleEmployeeModalOpen">Use Employee Code</div>
+                <div class="button btn order-btn" @click="toggleCheckoutModalOpen">Checkout</div>
             </div>
         </div>
+        <EmployeeModal :is-open="employeeModalOpen" @close="toggleEmployeeModalOpen" ></EmployeeModal>
+        <CheckoutModal :is-open="checkoutModalOpen" @close="toggleCheckoutModalOpen" ></CheckoutModal>
+
     </div>
+
 
 </template>
 
 <script>
-import { mapState, mapGetters } from "vuex";
+import { mapState, mapGetters } from 'vuex';
+import EmployeeModal from './EmployeeModal';
+import CheckoutModal from './CheckoutModal';
 export default {
+    components: {
+        EmployeeModal,
+        CheckoutModal
+    },
+
     computed: {
         ...mapState({ Order: state => state.Store.Order }),
-        ...mapGetters(["Order/orderTotal"]),
+        ...mapGetters(['Order/orderTotal']),
         orderTotal() {
-            return this["Order/orderTotal"];
+            return this['Order/orderTotal'];
         },
         tabText() {
-            return this.open ? "Hide Order" : "Show Order";
+            return this.open ? 'Hide Order' : 'Show Order';
         },
         slideoutClasses() {
             return {
                 slideout: true,
-                "slideout-active": this.open
+                'slideout-active': this.open
             };
         },
         slideoutInnerClasses() {
             return {
-                "slideout-inner": true,
-                "slideout-inner-active": this.open
+                'slideout-inner': true,
+                'slideout-inner-active': this.open
             };
         }
     },
     created() {
-        this.$store.commit("Order/SET_UP_ORDER");
+        this.$store.commit('Order/SET_UP_ORDER');
     },
     data() {
         return {
-            open: false
+            open: false,
+            employeeModalOpen: false,
+            checkoutModalOpen: false
         };
     },
     methods: {
         toggleOpen() {
             this.open = !this.open;
         },
-        toggleEmployeeOrder() {
-            this.$store.commit("Order/TOGGLE_EMPLOYEE_ORDER");
+
+        toggleEmployeeModalOpen() {
+            this.employeeModalOpen = !this.employeeModalOpen;
+        },
+        toggleCheckoutModalOpen() {
+            this.checkoutModalOpen = !this.checkoutModalOpen;
+        },
+
+        removeIceCream(index) {
+            this.$store.commit('Order/REMOVE_ICE_CREAM', index);
         }
     },
     filters: {
@@ -80,7 +104,7 @@ export default {
 </script>
 
 <style lang=scss scoped>
-@import "../assets/styles/variables.scss";
+@import '../assets/styles/variables.scss';
 
 .order-btn {
     border: solid white 4px;
