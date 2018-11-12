@@ -27,9 +27,7 @@
                     <router-link to="/order" class="navbar-item">
                         <h2>Order Now</h2>
                     </router-link>
-                    <router-link to="/about" class="navbar-item">
-                        <h2>About</h2>
-                    </router-link>
+
                 </div>
             </div>
         </div>

@@ -37,9 +37,9 @@
                         24/7 dedicated delivery team to fulfill your cravings no matter the hour.
                     </p>
                     <div class="columns is-centered">
-                        <a href="/pages/order.html" class="button btn">
+                        <router-link to="/order" class="button btn">
                             Order Now
-                        </a>
+                        </router-link>
                     </div>
 
             </div>
@@ -83,10 +83,10 @@
 </template>
 
 <script>
-import Navbar from "./Navbar";
-import Footer from "./Footer";
-import { Carousel, Slide } from "vue-carousel";
-import IceCreamTruckImg from "./IceCreamTruckImg";
+import Navbar from './Navbar';
+import Footer from './Footer';
+import { Carousel, Slide } from 'vue-carousel';
+import IceCreamTruckImg from './IceCreamTruckImg';
 export default {
     components: {
         Navbar,
@@ -100,5 +100,5 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss">
-@import "../assets/styles/home.scss";
+@import '../assets/styles/home.scss';
 </style>
